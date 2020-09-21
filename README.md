@@ -5,7 +5,7 @@
 
 UUIDKit is a Swift library for generating and working with Universally Unique Identifiers (UUIDs) as specified in [RFC 4122](https://tools.ietf.org/html/rfc4122.html).
 
-It extends the existing Foundation's `UUID` type.
+It extends the existing Foundation's [`UUID`](https://developer.apple.com/documentation/foundation/uuid) type.
 
 ## Generating UUIDs
 
