@@ -19,7 +19,7 @@ The default initializer for `UUID` returns a random (version 4) UUID. This libra
 let uuidv1 = UUID.v1()
 ```
 
-Note that this method may compromise privacy as it returns a UUID containing the Ethernet address of the user's computer.
+Instead of relying on the computer's Ethernet address to ensure global uniqueness of time-based UUIDs, this method generates a random node identifier that is used for the duration of the program's execution, as specified in [RFC 4122 section 4.5](https://datatracker.ietf.org/doc/html/rfc4122.html#section-4.5). The reason is discussed in [this issue](https://github.com/baarde/uuid-kit/issues/4).
 
 ### Random UUIDs (UUID.v4)
 
