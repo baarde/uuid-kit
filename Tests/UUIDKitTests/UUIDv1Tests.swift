@@ -14,14 +14,38 @@ final class UUIDv1Tests: XCTestCase {
     }
     
     func testNodeIsConstant() {
-        let lhs = UUID.v1()
-        let rhs = UUID.v1()
+        let lhs = UUIDv1()
+        let rhs = UUIDv1()
         XCTAssertNotEqual(lhs, rhs)
-        XCTAssertEqual(lhs.uuid.10, rhs.uuid.10)
-        XCTAssertEqual(lhs.uuid.11, rhs.uuid.11)
-        XCTAssertEqual(lhs.uuid.12, rhs.uuid.12)
-        XCTAssertEqual(lhs.uuid.13, rhs.uuid.13)
-        XCTAssertEqual(lhs.uuid.14, rhs.uuid.14)
-        XCTAssertEqual(lhs.uuid.15, rhs.uuid.15)
+        XCTAssertEqual(lhs.node, rhs.node)
+    }
+    
+    func testTimestampIsAscending() {
+        let lhs = UUIDv1()
+        let rhs = UUIDv1()
+        XCTAssertLessThan(lhs.timestamp, rhs.timestamp)
+    }
+    
+    func testFields() {
+        let uuid = UUIDv1("d2989d1a-3bf9-11ec-bdb7-4d10858c27b2")
+        XCTAssertEqual(uuid?.timestamp.rawValue, 0x1ec3bf9d2989d1a)
+        XCTAssertEqual(uuid?.clockSequence.rawValue, 0x3db7)
+        XCTAssertEqual(uuid?.node.rawValue, 0x4d10858c27b2)
+    }
+    
+    func testRawRepresentable() {
+        let rawValue = UUID(uuidString: "d2989d1a-3bf9-11ec-bdb7-4d10858c27b2")!
+        let uuid = UUIDv1(rawValue: rawValue)
+        XCTAssertNotNil(uuid)
+        XCTAssertEqual(uuid?.rawValue, rawValue)
+        XCTAssertNil(UUIDv1(rawValue: UUID(uuidString: "712869ea-f10f-40b7-b192-4f8653973806")!))
+    }
+    
+    func testLosslessStringConvertible() {
+        let description = "d2989d1a-3bf9-11ec-bdb7-4d10858c27b2"
+        let uuid = UUIDv1(description)
+        XCTAssertNotNil(uuid)
+        XCTAssertEqual(uuid?.description.lowercased(), description)
+        XCTAssertNil(UUIDv1("712869ea-f10f-40b7-b192-4f8653973806"))
     }
 }

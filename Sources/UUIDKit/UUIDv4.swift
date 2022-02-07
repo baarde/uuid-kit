@@ -16,20 +16,36 @@ extension UUID {
     }
 }
 
-extension UUID {
-    internal struct UUIDv4 {
-        public init() {
-            var generator = SystemRandomNumberGenerator()
-            self.init(using: &generator)
+public struct UUIDv4: Codable, Hashable, LosslessStringConvertible, RawRepresentable {
+    public init() {
+        var generator = SystemRandomNumberGenerator()
+        self.init(using: &generator)
+    }
+    
+    public init<T>(using generator: inout T) where T: RandomNumberGenerator {
+        let words = (generator.next(), generator.next())
+        rawValue = withUnsafeBytes(of: words) { bytes in
+            UUID(bytes: bytes, version: 4)
         }
-        
-        public init<T>(using generator: inout T) where T: RandomNumberGenerator {
-            let words = (generator.next(), generator.next())
-            rawValue = withUnsafeBytes(of: words) { bytes in
-                UUID(bytes: bytes, version: 4)
-            }
+    }
+    
+    public init?(rawValue: UUID) {
+        guard rawValue.version == 4 else {
+            return nil
         }
-        
-        public let rawValue: UUID
+        self.rawValue = rawValue
+    }
+    
+    public init?(_ description: String) {
+        guard let rawValue = UUID(uuidString: description), rawValue.version == 4 else {
+            return nil
+        }
+        self.rawValue = rawValue
+    }
+    
+    public let rawValue: UUID
+    
+    public var description: String {
+        rawValue.description
     }
 }
