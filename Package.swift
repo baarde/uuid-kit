@@ -16,9 +16,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-crypto.git", "1.0.0" ..< "3.0.0"),
     ],
     targets: [
-        .target(name: "CUUIDKit"),
         .target(name: "UUIDKit", dependencies: [
-            .target(name: "CUUIDKit"),
             .product(name: "Crypto", package: "swift-crypto"),
         ]),
         .testTarget(name: "UUIDKitTests", dependencies: [

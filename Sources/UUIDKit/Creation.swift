@@ -6,13 +6,15 @@ extension UUID {
     
     /// Creates a new time-based (version 1) UUID.
     ///
-    /// The UUID is built from the current time and the Ethernet address. When the Ethernet address
-    /// cannot be determined, a random value is used instead.
+    /// The UUID is built from the current time and a fixed randomly-generated node identifier.
     ///
-    /// When a random node is used, the least significand bit of byte 10 is set to 1.
+    /// This method does not use the Ethernet address because retrieving the Ethernet address is
+    /// platform-dependent, leaks private information and is not guaranteed to actually return a
+    /// unique identifier.
     ///
-    /// - warning: This method may expose the Ethernet address of the user's computer. If privacy is
-    ///            a concern, you should use a random UUID (`.v4`) instead.
+    /// - warning: Though randomly-generated, the node identifier is the same for all UUIDs created
+    ///            using this method. If you wish to hide the provenance of the UUIDs, you should
+    ///            use a different method.
     public static func v1() -> UUID {
         UUIDv1().rawValue
     }
