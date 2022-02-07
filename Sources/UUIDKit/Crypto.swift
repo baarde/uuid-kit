@@ -2,7 +2,7 @@ import Crypto
 import Foundation
 
 extension UUID {
-    internal init<T>(digest: T, version: Version) where T: Digest {
+    internal init<T>(digest: T, version: Int) where T: Digest {
         self = digest.withUnsafeBytes { bytes in
             UUID(bytes: bytes, version: version)
         }

@@ -1,6 +1,23 @@
 import Foundation
 
 extension UUID {
+    /// Creates a new time-based (version 1) UUID.
+    ///
+    /// The UUID is built from the current time and a fixed randomly-generated node identifier.
+    ///
+    /// This method does not use the Ethernet address because retrieving the Ethernet address is
+    /// platform-dependent, leaks private information and is not guaranteed to actually return a
+    /// unique identifier.
+    ///
+    /// - warning: Though randomly-generated, the node identifier is the same for all UUIDs created
+    ///            using this method. If you wish to hide the provenance of the UUIDs, you should
+    ///            use a different method.
+    public static func v1() -> UUID {
+        UUIDv1().rawValue
+    }
+}
+
+extension UUID {
     internal struct UUIDv1 {
         public init() {
             self.init(nodeID: .default)
