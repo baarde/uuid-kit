@@ -5,19 +5,30 @@ extension UUID {
     ///
     /// You can generate a new UUID as a namespace or use one of the pre-defined values
     /// (`.dns`, `.url`, `.oid` or `.x500`).
-    public struct Namespace: Hashable, RawRepresentable {
+    public struct Namespace: Codable, Hashable, LosslessStringConvertible, RawRepresentable {
         /// Creates a namespace with the specified UUID.
         ///
         /// - parameter uuid: The UUID to use as the namespace.
         public init(_ uuid: UUID) {
-            self.init(rawValue: uuid)
+            self.rawValue = uuid
         }
         
         public init(rawValue: UUID) {
             self.rawValue = rawValue
         }
         
+        public init?(_ description: String) {
+            guard let rawValue = UUID(uuidString: description) else {
+                return nil
+            }
+            self.rawValue = rawValue
+        }
+        
         public let rawValue: UUID
+        
+        public var description: String {
+            rawValue.description
+        }
         
         /// The namespace to use with a fully-qualified domain name.
         public static let dns = Namespace(UUID(
