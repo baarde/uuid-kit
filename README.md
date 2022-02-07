@@ -11,9 +11,9 @@ It extends the existing Foundation's [`UUID`](https://developer.apple.com/docume
 
 The default initializer for `UUID` returns a random (version 4) UUID. This library adds methods for creating version 1, version 3 and version 5 UUIDs.
 
-### UUID.v1
+### Time-based UUIDs (UUID.v1)
 
-This method returns a time-based (version 1) UUID.
+`UUID.v1` returns a time-based (version 1) UUID.
 
 ```swift
 let uuidv1 = UUID.v1()
@@ -21,18 +21,18 @@ let uuidv1 = UUID.v1()
 
 Note that this method may compromise privacy as it returns a UUID containing the Ethernet address of the user's computer.
 
-### UUID.v4
+### Random UUIDs (UUID.v4)
 
-This method returns a random (version 4) UUID. You may pass a custom random number generator.
+`UUID.v4` returns a random (version 4) UUID. You may pass a custom random number generator.
 
 ```swift
 var generator = SystemRandomNumberGenerator()
 let uuidv4 = UUID.v4(using: generator)
 ```
 
-### UUID.v3 and UUID.v5
+### Name-based UUIDs (UUID.v3 and UUID.v5)
 
-These methods return name-based UUIDs using either MD5 (version 3) or SHA-1 (version 5) hashing.
+`UUID.v3` and `UUID.v5` return name-based UUIDs using either MD5 (version 3) or SHA-1 (version 5) hashing.
 
 ```swift
 let uuidv3 = UUID.v3(name: "thats.an.example", namespace: .dns)
@@ -47,4 +47,4 @@ let customNamespace = UUID.Namespace(UUID(uuidString: "34cd6bf4-3f41-4717-95ea-1
 
 ## License
 
-This project is licensed for use under the MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
+This project is licensed for use under the MIT License (MIT). Please see the [LICENSE](LICENSE) file for more information.
